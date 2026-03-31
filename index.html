@@ -317,28 +317,8 @@
     position: relative;
   }
 
-  @keyframes duo-nudge-left {
-    0%, 100% { transform: translateX(0px); }
-    50% { transform: translateX(5px); }
-  }
-  @keyframes duo-nudge-right {
-    0%, 100% { transform: translateX(0px); }
-    50% { transform: translateX(-5px); }
-  }
-  .card-avatar-duo .card-avatar:first-child {
-    animation: none;
-  }
-  .card-avatar-duo .card-avatar:last-child {
-    animation: none;
-  }
-  .card-avatar-duo.in-view .card-avatar:first-child {
-    animation: duo-nudge-left 3.2s ease-in-out infinite;
-  }
-  .card-avatar-duo.in-view .card-avatar:last-child {
-    animation: duo-nudge-right 3.2s ease-in-out infinite;
-  }
-  .card-avatar-duo .card-avatar:hover {
-    animation-play-state: paused;
+  .card-avatar-duo .card-avatar {
+    transition: transform 0.12s ease-out;
   }
 
   .card-avatar-placeholder {
@@ -912,7 +892,7 @@
     display: inline-flex;
     align-items: center;
     gap: 7px;
-    background: #09000E;
+    background: #127997;
     color: #ffffff;
     font-family: 'DM Sans', sans-serif;
     font-size: 14px;
@@ -2038,19 +2018,26 @@
     if (banner) banner.classList.add('visible');
   }, 10000);
 
-  // === DUO AVATAR SCROLL ANIMATION ===
-  var duoObserver = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in-view');
-      } else {
-        entry.target.classList.remove('in-view');
-      }
+  // === DUO AVATAR SCROLL-DRIVEN NUDGE ===
+  var duos = document.querySelectorAll('.card-avatar-duo');
+  function updateDuoNudge() {
+    var vh = window.innerHeight;
+    duos.forEach(function(duo) {
+      var rect = duo.getBoundingClientRect();
+      var elCenter = rect.top + rect.height / 2;
+      var vCenter = vh / 2;
+      var maxDist = vh * 0.65;
+      var dist = Math.abs(elCenter - vCenter);
+      var progress = Math.max(0, 1 - dist / maxDist);
+      var nudge = progress * 9;
+      var first = duo.querySelector('.card-avatar:first-child');
+      var last = duo.querySelector('.card-avatar:last-child');
+      if (first) first.style.transform = 'translateX(' + nudge + 'px)';
+      if (last) last.style.transform = 'translateX(-' + nudge + 'px)';
     });
-  }, { threshold: 0.4 });
-  document.querySelectorAll('.card-avatar-duo').forEach(function(duo) {
-    duoObserver.observe(duo);
-  });
+  }
+  window.addEventListener('scroll', updateDuoNudge, { passive: true });
+  updateDuoNudge();
 
   // === AVATAR FALLBACK ===
   document.querySelectorAll('.card-avatar').forEach(img => {

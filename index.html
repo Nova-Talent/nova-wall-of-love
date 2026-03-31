@@ -735,6 +735,37 @@
     pointer-events: none;
   }
 
+  .yt-player-container {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+  }
+  .yt-player-container iframe {
+    width: 100% !important;
+    height: 100% !important;
+    border: none;
+  }
+  .yt-sound-hint {
+    position: absolute;
+    bottom: 12px; left: 12px;
+    z-index: 10;
+    background: rgba(0,0,0,0.65);
+    color: white;
+    font-size: 11px;
+    font-family: 'DM Sans', sans-serif;
+    padding: 5px 10px 5px 8px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  .video-wrapper-top.playing .yt-sound-hint { opacity: 1; }
+  .video-wrapper-top.unmuted .yt-sound-hint { opacity: 0; }
+
 
   .card:has(.video-wrapper-top) .card-header {
     padding: 14px 14px 0;
@@ -922,9 +953,10 @@
     </div>
 
     <div class="card" data-theme="growth">
-      <div class="video-wrapper-top" data-src="https://drive.google.com/file/d/1K7fQiALnf4FYndRsppVOisPtRv6jBHJD/preview">
-        <img class="video-thumb" src="https://drive.google.com/thumbnail?id=1K7fQiALnf4FYndRsppVOisPtRv6jBHJD&sz=w1280" alt="Chiara Vigone video">
+      <div class="video-wrapper-top" data-ytid="kBduQI-Gb9E">
+        <img class="video-thumb" src="https://img.youtube.com/vi/kBduQI-Gb9E/maxresdefault.jpg" alt="Chiara Vigone video">
         <div class="video-play-btn"><svg viewBox="0 0 24 24" fill="white"><polygon points="6,3 20,12 6,21"/></svg></div>
+        <div class="yt-sound-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg> Tap to unmute</div>
       </div>
       <div class="card-header">
         <img class="card-avatar" src="https://quasar.novatalent.com/files?token=60525f4fa2025db929b6a93a0cfbd7a35ee6e7c6cd8100df6ba3135a5735168bae2b240fec1e2cc34110fe1663066b46079d09865834ee1cdb9afc946d6310edbbffd906d3a9f6f5f32be754cc548697b14760c4c77a62ec2008999bffb866ce" alt="Chiara Vigone">
@@ -1090,9 +1122,10 @@
     </div>
 
     <div class="card" data-theme="growth">
-      <div class="video-wrapper-top" data-src="https://drive.google.com/file/d/1oI9p_0feuEb9sd-tayXvKQKnDrPOISfT/preview">
-        <img class="video-thumb" src="https://drive.google.com/thumbnail?id=1oI9p_0feuEb9sd-tayXvKQKnDrPOISfT&sz=w1280" alt="Per Clingweld video">
+      <div class="video-wrapper-top" data-ytid="c4n-gi3iIOA">
+        <img class="video-thumb" src="https://img.youtube.com/vi/c4n-gi3iIOA/maxresdefault.jpg" alt="Per Clingweld video">
         <div class="video-play-btn"><svg viewBox="0 0 24 24" fill="white"><polygon points="6,3 20,12 6,21"/></svg></div>
+        <div class="yt-sound-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg> Tap to unmute</div>
       </div>
       <div class="card-header">
         <img class="card-avatar" src="https://quasar.novatalent.com/files?token=60525f4fa2025db929b6a93a0cfbd7a35ee6e7c6cd8100df6ba3135a5735168b644588d2d4d6f7a5f9c78eb6f397ce32145a229730e07c0b3a970d06b73822cc5dde033d529d70e4370dca94ae3491a8" alt="Per Clingweld">
@@ -1168,9 +1201,10 @@
     </div>
 
     <div class="card" data-theme="career">
-      <div class="video-wrapper-top" data-src="https://drive.google.com/file/d/1qeINDVYCUlxHfJLcdrJz6vNU9dao7gW9/preview">
-        <img class="video-thumb" src="https://drive.google.com/thumbnail?id=1qeINDVYCUlxHfJLcdrJz6vNU9dao7gW9&sz=w1280" alt="Max Nyman video">
+      <div class="video-wrapper-top" data-ytid="wRubDQBHds0">
+        <img class="video-thumb" src="https://img.youtube.com/vi/wRubDQBHds0/maxresdefault.jpg" alt="Max Nyman video">
         <div class="video-play-btn"><svg viewBox="0 0 24 24" fill="white"><polygon points="6,3 20,12 6,21"/></svg></div>
+        <div class="yt-sound-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg> Tap to unmute</div>
       </div>
       <div class="card-header">
         <img class="card-avatar" src="https://quasar.novatalent.com/files?token=60525f4fa2025db929b6a93a0cfbd7a35ee6e7c6cd8100df6ba3135a5735168b91e8367172702a312191639e29ee4afda4c900a326632a8933aee744ef76d737ae21cac7d38a851134975cd8139b7a92119474d898fab080ecd4d0c9306c4e70" alt="Max Nyman">
@@ -1246,9 +1280,10 @@
     </div>
 
     <div class="card" data-theme="connection">
-      <div class="video-wrapper-top" data-src="https://drive.google.com/file/d/1TpkbKeg6GUA2XWKd9TIVVQklZBiGuKXB/preview">
-        <img class="video-thumb" src="https://drive.google.com/thumbnail?id=1TpkbKeg6GUA2XWKd9TIVVQklZBiGuKXB&sz=w1280" alt="Marika Baltscheffsky video">
+      <div class="video-wrapper-top" data-ytid="Fv9IAWd8Yys">
+        <img class="video-thumb" src="https://img.youtube.com/vi/Fv9IAWd8Yys/maxresdefault.jpg" alt="Marika Baltscheffsky video">
         <div class="video-play-btn"><svg viewBox="0 0 24 24" fill="white"><polygon points="6,3 20,12 6,21"/></svg></div>
+        <div class="yt-sound-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg> Tap to unmute</div>
       </div>
       <div class="card-header">
         <img class="card-avatar" src="https://quasar.novatalent.com/files?token=60525f4fa2025db929b6a93a0cfbd7a35ee6e7c6cd8100df6ba3135a5735168b8405cc9aaa28bb7ce42d8b08af47909663f26f2d093616b5b37ba182f16e4dc1268e7e9b050b4ce78f5839194b15180cdcef988fa802484d83bed3a11cf749af" alt="Marika Baltscheffsky">
@@ -1296,9 +1331,10 @@
 
 
     <div class="card" data-theme="connection">
-      <div class="video-wrapper-top" data-src="https://drive.google.com/file/d/12mrS1t52hEVe3NyvO0BXFlAp0FkB7Dpx/preview">
-        <img class="video-thumb" src="https://drive.google.com/thumbnail?id=12mrS1t52hEVe3NyvO0BXFlAp0FkB7Dpx&sz=w1280" alt="Carlos Gandiaga video">
+      <div class="video-wrapper-top" data-ytid="ziDfXbHFRms">
+        <img class="video-thumb" src="https://img.youtube.com/vi/ziDfXbHFRms/maxresdefault.jpg" alt="Carlos Gandiaga video">
         <div class="video-play-btn"><svg viewBox="0 0 24 24" fill="white"><polygon points="6,3 20,12 6,21"/></svg></div>
+        <div class="yt-sound-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg> Tap to unmute</div>
       </div>
       <div class="card-header">
         <img class="card-avatar" src="https://quasar.novatalent.com/files?token=60525f4fa2025db929b6a93a0cfbd7a35ee6e7c6cd8100df6ba3135a5735168be3116201531d80ad13c52abe2587349edf17631f70a281b31459fbcc3a30da017b0cdbb67fa19d24ae041ab3e61758f3096cd0ffb6c5d1c75aba221b54dff62e" alt="Carlos Gandiaga">
@@ -1828,19 +1864,65 @@
     }, 450);
   }, 6000);
 
-  // === VIDEO CLICK-TO-PLAY ===
-  document.querySelectorAll('.video-wrapper-top[data-src]').forEach(wrapper => {
-    wrapper.addEventListener('click', function() {
-      if (this.classList.contains('playing')) return;
-      this.classList.add('playing');
-      const iframe = document.createElement('iframe');
-      iframe.src = this.dataset.src;
-      iframe.allowFullscreen = true;
-      iframe.allow = 'autoplay';
-      iframe.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:calc(100% + 90px);border:none;display:block;';
-      this.appendChild(iframe);
+  // === YOUTUBE VIDEO PLAYERS ===
+  const ytPlayers = {};
+
+  window.onYouTubeIframeAPIReady = function() {
+    document.querySelectorAll('.video-wrapper-top[data-ytid]').forEach(function(wrapper) {
+      const videoId = wrapper.dataset.ytid;
+      const containerId = 'yt-player-' + videoId;
+
+      const container = document.createElement('div');
+      container.id = containerId;
+      container.className = 'yt-player-container';
+      wrapper.appendChild(container);
+
+      new YT.Player(containerId, {
+        videoId: videoId,
+        playerVars: { autoplay: 0, mute: 1, controls: 0, modestbranding: 1, rel: 0, playsinline: 1, disablekb: 1, fs: 0, iv_load_policy: 3 },
+        events: {
+          onReady: function(e) { ytPlayers[videoId] = e.target; e.target.mute(); }
+        }
+      });
+
+      wrapper.addEventListener('mouseenter', function() {
+        const p = ytPlayers[videoId];
+        if (!p) return;
+        p.mute();
+        p.playVideo();
+        this.classList.add('playing');
+      });
+
+      wrapper.addEventListener('mouseleave', function() {
+        const p = ytPlayers[videoId];
+        if (p) { p.pauseVideo(); p.seekTo(0); p.mute(); }
+        this.classList.remove('playing');
+        this.classList.remove('unmuted');
+      });
+
+      wrapper.addEventListener('click', function() {
+        const p = ytPlayers[videoId];
+        if (!p) return;
+        if (this.classList.contains('unmuted')) {
+          p.mute();
+          this.classList.remove('unmuted');
+        } else {
+          p.unMute();
+          this.classList.add('unmuted');
+          if (!this.classList.contains('playing')) {
+            p.playVideo();
+            this.classList.add('playing');
+          }
+        }
+      });
     });
-  });
+  };
+
+  (function() {
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(tag);
+  })();
 
   // === AVATAR FALLBACK ===
   document.querySelectorAll('.card-avatar').forEach(img => {

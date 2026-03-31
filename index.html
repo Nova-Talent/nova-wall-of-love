@@ -245,9 +245,22 @@
     columns: 3;
     column-gap: 20px;
   }
+  .masonry.masonry-flex {
+    columns: unset;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .masonry-col {
+    flex: 1;
+    min-width: 0;
+  }
+  .masonry-col .card {
+    margin-bottom: 18px;
+  }
 
-  @media (max-width: 900px) { .masonry { columns: 2; } }
-  @media (max-width: 600px) { .masonry { columns: 1; } }
+  @media (max-width: 900px) { .masonry { columns: 2; } .masonry.masonry-flex { display: block; columns: 2; } }
+  @media (max-width: 600px) { .masonry { columns: 1; } .masonry.masonry-flex { columns: 1; } }
 
   /* ===== TESTIMONIAL CARDS ===== */
   .card {
@@ -308,7 +321,7 @@
     transition: transform 0.35s ease, z-index 0s;
   }
   .card-avatar-duo .card-avatar + .card-avatar {
-    margin-left: -22px;
+    margin-left: -8px;
     border: 2px solid var(--bg-card);
   }
   .card-avatar-duo .card-avatar:hover {
@@ -793,33 +806,34 @@
 
   /* ===== DUO PERSON CARDS ===== */
   .card-header-duo {
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    flex-wrap: nowrap;
-    gap: 10px;
+    gap: 12px;
   }
 
-  .card-meta-left {
-    text-align: right;
+  .card-meta-duo-row {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .card-meta-duo-row .card-meta {
     flex: 1;
+    text-align: center;
     min-width: 0;
   }
 
-  .card-meta-right {
-    text-align: left;
-    flex: 1;
-    min-width: 0;
-  }
-
-  .card-header-duo .card-meta h3 {
+  .card-meta-duo-row .card-meta h3 {
     font-size: 12px;
     font-weight: 600;
     line-height: 1.3;
   }
 
-  .card-header-duo .card-meta p {
+  .card-meta-duo-row .card-meta p {
     font-size: 10px;
     line-height: 1.4;
+    color: var(--text-secondary);
   }
 
   /* ===== SCROLL REVEAL ===== */
@@ -1574,17 +1588,13 @@
 
     <div class="card" data-theme="connection">
       <div class="card-header card-header-duo">
-        <div class="card-meta card-meta-left">
-          <h3>Daniele Matyas Tieghi</h3>
-          <p>Founder & CEO at ZHERO</p>
-        </div>
         <div class="card-avatar-duo">
           <img class="card-avatar" src="https://quasar.novatalent.com/files?token=60525f4fa2025db929b6a93a0cfbd7a35ee6e7c6cd8100df6ba3135a5735168bb63953fa4a9aad5120f749690fd3c0fb3f2b4c40b0743c24cfc45eab7eba8293de47bef6b1b9ab6a98b968487630701be9ec6cd1ffb22fd1b61d84d146c4a175" alt="Daniele Matyas Tieghi">
           <img class="card-avatar" src="https://quasar.novatalent.com/files?token=60525f4fa2025db929b6a93a0cfbd7a35ee6e7c6cd8100df6ba3135a5735168b52f4cca67c1a1283b9a647adee22df2d266d41979be807bb9d177bbec319c25214a964d3b939eb0a39caa623b3faa1ea7acef0155b53d46562ac14b40ab6e101" alt="Stefano Del Fabbro">
         </div>
-        <div class="card-meta card-meta-right">
-          <h3>Stefano Del Fabbro</h3>
-          <p>Head of Growth at Zappyrent</p>
+        <div class="card-meta-duo-row">
+          <div class="card-meta"><h3>Daniele Matyas Tieghi</h3><p>Founder & CEO at ZHERO</p></div>
+          <div class="card-meta"><h3>Stefano Del Fabbro</h3><p>Head of Growth at Zappyrent</p></div>
         </div>
       </div>
       <div class="card-quote">Met at a Nova Afterwork, ran into each other again at a Senior Dine Out — now planning to start a company together.</div>
@@ -1596,17 +1606,13 @@
 
     <div class="card" data-theme="connection">
       <div class="card-header card-header-duo">
-        <div class="card-meta card-meta-left">
-          <h3>Fátima Bigeriego</h3>
-          <p>Sales Coach & Advisor</p>
-        </div>
         <div class="card-avatar-duo">
           <img class="card-avatar" src="https://quasar.novatalent.com/files?token=60525f4fa2025db929b6a93a0cfbd7a35ee6e7c6cd8100df6ba3135a5735168bc31f7b5c45c43598928165ec520bee4f392582c529bc901a7f770e8aeba18ea936f39938b2d75cf5ce015931458b4bda9285eac46c8c8d3b9d5221cc09e0f7c1" alt="Fátima Bigeriego">
           <img class="card-avatar" src="https://quasar.novatalent.com/files?token=60525f4fa2025db929b6a93a0cfbd7a35ee6e7c6cd8100df6ba3135a5735168b882484f96d568317092f3454f5d85fdacf6e6b84a2ab97ddb6d0f5a8c1f8667c858d5d806fed4c5aa14eda74bbb5ca98e9f48bfce4bab938f9ebf8921c459485" alt="Cristina Pujol">
         </div>
-        <div class="card-meta card-meta-right">
-          <h3>Cristina Pujol</h3>
-          <p>CRM Marketing Manager at Vista</p>
+        <div class="card-meta-duo-row">
+          <div class="card-meta"><h3>Fátima Bigeriego</h3><p>Sales Coach &amp; Advisor</p></div>
+          <div class="card-meta"><h3>Cristina Pujol</h3><p>CRM Marketing Manager at Vista</p></div>
         </div>
       </div>
       <div class="card-quote no-quote">Cris and I met through a Nova event and instantly clicked. Not only did we become great friends, but we're now roommates as well!</div>
@@ -1665,17 +1671,13 @@
 
     <div class="card" data-theme="connection">
       <div class="card-header card-header-duo">
-        <div class="card-meta card-meta-left">
-          <h3>Alberto Cendoya</h3>
-          <p>Co-Founder at Bihar Batteries</p>
-        </div>
         <div class="card-avatar-duo">
           <img class="card-avatar" src="https://quasar.novatalent.com/files?token=60525f4fa2025db929b6a93a0cfbd7a35ee6e7c6cd8100df6ba3135a5735168b876a3a30da2a2dc413d3fff72b0ed7cb3c3d5f37a85265c91879542b6633b555464eb9edd1aab6fb43649f1ebb47657e" alt="Alberto Cendoya">
           <img class="card-avatar" src="https://quasar.novatalent.com/files?token=60525f4fa2025db929b6a93a0cfbd7a35ee6e7c6cd8100df6ba3135a5735168bf5e45ab7fc35e3951c8456232d05622c1dc2aadb162261ed5453097c44151c78f663ba158ca7120e8f8c9f4b880f6ca5" alt="Sebastián Fernández Medrano">
         </div>
-        <div class="card-meta card-meta-right">
-          <h3>Sebastián Fernández</h3>
-          <p>Co-Founder &amp; COO at Bihar Batteries</p>
+        <div class="card-meta-duo-row">
+          <div class="card-meta"><h3>Alberto Cendoya</h3><p>Co-Founder at Bihar Batteries</p></div>
+          <div class="card-meta"><h3>Sebastián Fernández</h3><p>Co-Founder &amp; COO at Bihar Batteries</p></div>
         </div>
       </div>
       <div class="card-quote">We both aspired to embark on entrepreneurial ventures but were hesitant to do it alone. Thanks to Nova, we found the ideal co-founder in each other.</div>
@@ -1721,17 +1723,13 @@
 
     <div class="card" data-theme="career">
       <div class="card-header card-header-duo">
-        <div class="card-meta card-meta-left">
-          <h3>Filippo Mozzi</h3>
-          <p>Marketing Lead at Vacheron Constantin</p>
-        </div>
         <div class="card-avatar-duo">
           <img class="card-avatar" src="https://quasar.novatalent.com/files?token=60525f4fa2025db929b6a93a0cfbd7a35ee6e7c6cd8100df6ba3135a5735168b7ff0b18a5026bc49f15799d79dd8481c4e9f3c264376768440125835d3d9214effaed78c9d841070bb7b67bf1f38aaa293d21f4b82967b807b288630b336be72" alt="Filippo Mozzi">
           <img class="card-avatar" src="https://quasar.novatalent.com/files?token=60525f4fa2025db929b6a93a0cfbd7a35ee6e7c6cd8100df6ba3135a5735168b83851cc0fac3395252fda6dcf184e72f1e84610bc98e50a89dad2061b582790f5909fe0171f4581e25a444a10a7d554bacc5eeb7399d800e33f2ec110949d74a" alt="Antonio Petrullo">
         </div>
-        <div class="card-meta card-meta-right">
-          <h3>Antonio Petrullo</h3>
-          <p>Account Director at Google</p>
+        <div class="card-meta-duo-row">
+          <div class="card-meta"><h3>Filippo Mozzi</h3><p>Marketing Lead at Vacheron Constantin</p></div>
+          <div class="card-meta"><h3>Antonio Petrullo</h3><p>Account Director at Google</p></div>
         </div>
       </div>
       <div class="card-quote no-quote">Through Nova's mentorship program, Filippo connected with Antonio — who opened the doors to a visit at Google Italy.</div>
@@ -1803,17 +1801,13 @@
 
     <div class="card" data-theme="connection">
       <div class="card-header card-header-duo">
-        <div class="card-meta card-meta-left">
-          <h3>Marc Bachs</h3>
-          <p>Head of Operations at Block Earner</p>
-        </div>
         <div class="card-avatar-duo">
           <img class="card-avatar" src="https://quasar.novatalent.com/files?token=60525f4fa2025db929b6a93a0cfbd7a35ee6e7c6cd8100df6ba3135a5735168bb1f4b0bf4b135431fbaa9c06253a5b9f8695acafa48c4acb627e23cccc892f58b3251326ad8a4d9dcc820ca3380efc92" alt="Marc Bachs">
           <img class="card-avatar" src="https://quasar.novatalent.com/files?token=60525f4fa2025db929b6a93a0cfbd7a35ee6e7c6cd8100df6ba3135a5735168b01bec03782665e2421c8129a86d64e80d079c8572fd181b652fda0f60fef043bec9ddb9c3073465a9f00321ad1847cf8" alt="Juan Martino Nales">
         </div>
-        <div class="card-meta card-meta-right">
-          <h3>Juan Martino</h3>
-          <p>Global Design Innovation Manager at ARCADIS</p>
+        <div class="card-meta-duo-row">
+          <div class="card-meta"><h3>Marc Bachs</h3><p>Head of Operations at Block Earner</p></div>
+          <div class="card-meta"><h3>Juan Martino</h3><p>Global Design Innovation Manager at ARCADIS</p></div>
         </div>
       </div>
       <div class="card-quote">Being an expat feels a lot less intimidating when you're part of Nova. Before moving to Sydney, I reached out to Marc, a fellow Nova who was already living there. Those initial conversations not only answered my doubts but also sparked a friendship that has proven to be incredibly valuable.</div>
@@ -1872,6 +1866,30 @@
 </footer>
 
 <script>
+  // === 3-COLUMN MASONRY — PER PINNED TO TOP-RIGHT ===
+  (function() {
+    if (window.innerWidth <= 900) return;
+    var masonry = document.getElementById('masonry');
+    if (!masonry) return;
+    var allCards = Array.from(masonry.children).filter(function(el) {
+      return el.classList.contains('card');
+    });
+    var perCard = allCards.find(function(c) {
+      return c.querySelector('[data-ytid="wRubDQBHds0"]');
+    });
+    var cols = [0, 1, 2].map(function() {
+      var col = document.createElement('div');
+      col.className = 'masonry-col';
+      return col;
+    });
+    if (perCard) cols[2].appendChild(perCard);
+    var remaining = allCards.filter(function(c) { return c !== perCard; });
+    remaining.forEach(function(card, i) { cols[i % 3].appendChild(card); });
+    masonry.innerHTML = '';
+    cols.forEach(function(col) { masonry.appendChild(col); });
+    masonry.classList.add('masonry-flex');
+  })();
+
   // === FILTER LOGIC ===
   const buttons = document.querySelectorAll('.filter-btn');
   const cards = document.querySelectorAll('.card');

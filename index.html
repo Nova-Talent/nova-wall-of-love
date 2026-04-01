@@ -1866,104 +1866,110 @@
 </footer>
 
 <script>
-  // === 3-COLUMN MASONRY — VIDEOS + DUOS STAGGERED ===
-  (function() {
-    if (window.innerWidth <= 900) return;
+  // === MASONRY + FILTER ===
+  var _allCards = null; // cached in original DOM order
+
+  function buildColumns(filter) {
     var masonry = document.getElementById('masonry');
     if (!masonry) return;
+    var desktop = window.innerWidth > 900;
 
-    var allCards = Array.from(masonry.children).filter(function(el) {
-      return el.classList.contains('card');
-    });
-
-    function byYtid(ytid) {
-      return allCards.find(function(c) { return !!c.querySelector('[data-ytid="' + ytid + '"]'); });
+    // On first run, cache cards in original order from DOM
+    if (!_allCards) {
+      _allCards = Array.from(masonry.querySelectorAll('.card'));
     }
 
-    // Video cards — pinned to specific col/position
-    var perCard    = byYtid('wRubDQBHds0'); // right, top
-    var chiaraCard = byYtid('Fv9IAWd8Yys'); // left, early
-    var maxCard    = byYtid('ziDfXbHFRms'); // center, early
-    var marikaCard = byYtid('kBduQI-Gb9E'); // left, mid
-    var carlosCard = byYtid('c4n-gi3iIOA'); // center, lower
-
-    var videos = [perCard, chiaraCard, maxCard, marikaCard, carlosCard].filter(Boolean);
-
-    // Split remaining into duo cards and plain regular cards
-    var rest = allCards.filter(function(c) { return videos.indexOf(c) === -1; });
-    var duos = rest.filter(function(c) { return !!c.querySelector('.card-avatar-duo'); });
-    var reg  = rest.filter(function(c) { return !c.querySelector('.card-avatar-duo'); });
-
-    var cols = [0, 1, 2].map(function() {
-      var col = document.createElement('div');
-      col.className = 'masonry-col';
-      return col;
-    });
-
-    var ri = 0, di = 0;
-
-    function fillReg(ci, n) {
-      for (var i = 0; i < n && ri < reg.length; i++) cols[ci].appendChild(reg[ri++]);
+    if (!desktop) {
+      // Mobile: just show/hide, no column rearranging
+      _allCards.forEach(function(c) {
+        if (filter === 'all' || c.dataset.theme === filter) c.classList.remove('hidden');
+        else c.classList.add('hidden');
+      });
+      return;
     }
-    function addDuo(ci) {
-      if (di < duos.length) cols[ci].appendChild(duos[di++]);
+
+    // Ensure column divs exist
+    var cols = Array.from(masonry.querySelectorAll('.masonry-col'));
+    if (!cols.length) {
+      cols = [0,1,2].map(function() {
+        var col = document.createElement('div');
+        col.className = 'masonry-col';
+        masonry.appendChild(col);
+        return col;
+      });
+      masonry.classList.add('masonry-flex');
     }
-    function fillShortest() {
-      var s = 0;
-      for (var c = 1; c < 3; c++) {
-        if (cols[c].children.length < cols[s].children.length) s = c;
+
+    // Detach all cards from columns (keeps DOM refs)
+    _allCards.forEach(function(c) { if (c.parentNode) c.parentNode.removeChild(c); });
+    cols.forEach(function(col) { col.innerHTML = ''; });
+
+    if (filter === 'all') {
+      // === STAGGERED LAYOUT (full set) ===
+      function byYtid(ytid) {
+        return _allCards.find(function(c) { return !!c.querySelector('[data-ytid="' + ytid + '"]'); });
       }
-      if (ri < reg.length) cols[s].appendChild(reg[ri++]);
+      var perCard    = byYtid('wRubDQBHds0');
+      var chiaraCard = byYtid('Fv9IAWd8Yys');
+      var maxCard    = byYtid('ziDfXbHFRms');
+      var marikaCard = byYtid('kBduQI-Gb9E');
+      var carlosCard = byYtid('c4n-gi3iIOA');
+      var videos = [perCard, chiaraCard, maxCard, marikaCard, carlosCard].filter(Boolean);
+      var rest = _allCards.filter(function(c) { return videos.indexOf(c) === -1; });
+      var duos = rest.filter(function(c) { return !!c.querySelector('.card-avatar-duo'); });
+      var reg  = rest.filter(function(c) { return !c.querySelector('.card-avatar-duo'); });
+
+      var ri = 0, di = 0;
+      function fillReg(ci, n) { for (var i=0;i<n&&ri<reg.length;i++) cols[ci].appendChild(reg[ri++]); }
+      function addDuo(ci) { if (di<duos.length) cols[ci].appendChild(duos[di++]); }
+      function shortest() { var s=0; for(var c=1;c<3;c++) if(cols[c].children.length<cols[s].children.length) s=c; return s; }
+
+      if (perCard) cols[2].appendChild(perCard);
+      fillReg(0,3); if(chiaraCard) cols[0].appendChild(chiaraCard);
+      fillReg(1,3); addDuo(1);
+      fillReg(2,3); addDuo(2);
+      fillReg(0,3); addDuo(0);
+      if(maxCard) cols[1].appendChild(maxCard);
+      fillReg(2,3);
+      fillReg(0,3); if(marikaCard) cols[0].appendChild(marikaCard);
+      fillReg(1,3); addDuo(1); if(carlosCard) cols[1].appendChild(carlosCard);
+      fillReg(2,3); addDuo(2);
+      while (ri < reg.length) { cols[shortest()].appendChild(reg[ri++]); }
+
+      _allCards.forEach(function(c) { c.classList.remove('hidden'); });
+
+    } else {
+      // === FILTERED LAYOUT: redistribute matching cards by shortest-column ===
+      var visible = _allCards.filter(function(c) { return c.dataset.theme === filter; });
+      var hidden  = _allCards.filter(function(c) { return c.dataset.theme !== filter; });
+
+      visible.forEach(function(card) {
+        card.classList.remove('hidden');
+        var s = 0;
+        for (var c = 1; c < 3; c++) {
+          if (cols[c].children.length < cols[s].children.length) s = c;
+        }
+        cols[s].appendChild(card);
+      });
+
+      // Stash hidden cards off-screen in col 0 so they stay in DOM
+      hidden.forEach(function(card) {
+        card.classList.add('hidden');
+        cols[0].appendChild(card);
+      });
     }
+  }
 
-    // === COLUMN LAYOUT ===
-    // Col 2 (right):   Per → 3 reg → Duo → 3 reg → Duo → tail
-    // Col 0 (left):    3 reg → Chiara → 3 reg → Duo → 3 reg → Marika → tail
-    // Col 1 (center):  3 reg → Duo → Max → 3 reg → Duo → Carlos → tail
+  // Initial build
+  buildColumns('all');
 
-    if (perCard) cols[2].appendChild(perCard);    // right: Per first
-
-    fillReg(0, 3); if (chiaraCard) cols[0].appendChild(chiaraCard); // left: 3 reg → Chiara
-    fillReg(1, 3); addDuo(1);                                        // center: 3 reg → Duo[0]
-    fillReg(2, 3); addDuo(2);                                        // right: 3 reg → Duo[1]
-
-    fillReg(0, 3); addDuo(0);                                        // left: 3 reg → Duo[2]
-    if (maxCard) cols[1].appendChild(maxCard);                       // center: Max video
-    fillReg(2, 3);                                                   // right: 3 reg
-
-    fillReg(0, 3); if (marikaCard) cols[0].appendChild(marikaCard);  // left: 3 reg → Marika
-    fillReg(1, 3); addDuo(1); if (carlosCard) cols[1].appendChild(carlosCard); // center: 3 reg → Duo[3] → Carlos
-    fillReg(2, 3); addDuo(2);                                        // right: 3 reg → Duo[4]
-
-    // Balance tail using shortest-column
-    while (ri < reg.length) fillShortest();
-
-    masonry.innerHTML = '';
-    cols.forEach(function(col) { masonry.appendChild(col); });
-    masonry.classList.add('masonry-flex');
-  })();
-
-  // === FILTER LOGIC ===
+  // Filter buttons
   const buttons = document.querySelectorAll('.filter-btn');
-  const cards = document.querySelectorAll('.card');
-
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
       buttons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      const filter = btn.dataset.filter;
-
-      cards.forEach((card, i) => {
-        if (filter === 'all' || card.dataset.theme === filter) {
-          card.classList.remove('hidden');
-          card.style.animationDelay = `${i * 0.04}s`;
-          card.style.animation = 'none';
-          card.offsetHeight; // trigger reflow
-          card.style.animation = '';
-        } else {
-          card.classList.add('hidden');
-        }
-      });
+      buildColumns(btn.dataset.filter);
     });
   });
 
